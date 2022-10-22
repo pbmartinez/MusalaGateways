@@ -29,21 +29,19 @@ namespace WebApi.Controllers
             if (gatewayId == null || gatewayId.Value == Guid.Empty)
             {
                 validationErrors.Add("gateway id is not valid");
+                return validationErrors;
             }
-            else
+            
+            var gateway = await AppService.GetAsync(gatewayId.Value, Includes);
+
+            if (gateway == null)
             {
-                var gateway = await AppService.GetAsync(gatewayId.Value, Includes);
-
-                if (gateway == null)
-                    validationErrors.Add("gateway does not exist");
-                else
-                {
-                    if (gateway.Peripherals.Count >= 10)
-                        validationErrors.Add(string.Format(Resource.validation_MaxPeriphelsAllowed, GatewayPeripherals.MAX_PERIPHERALS_ALLOWED_PER_GATEWAY));
-                }
-
+                validationErrors.Add("gateway does not exist");
+                return validationErrors;
             }
-
+            if (gateway.Peripherals.Count >= 10)
+                validationErrors.Add(string.Format(Resource.validation_MaxPeriphelsAllowed, GatewayPeripherals.MAX_PERIPHERALS_ALLOWED_PER_GATEWAY));
+            
             return validationErrors;
         }
     }

@@ -44,7 +44,7 @@ namespace WebApi.Controllers
         /// <summary>
         /// Defines the fields by which the list items will be ordered. The list items will be ordered multiple levels, 
         /// in the same order that the diccionary is feeded. For specifying Ascending / Descending order specify true / false in each field.
-        /// Multiple related fields can be specified as long as none of them be a collection navigation property.
+        /// Multiple related fields can be specified as long as none of them being a collection navigation property.
         /// To Do: Known Problem: Navigation properties belonging to collection properties can not be digged.
         /// </summary>
         protected Dictionary<string, bool> DefaultOrderBy = new();
